@@ -24,11 +24,13 @@ public class ProductController {
     public Product getProductById(@PathVariable Long id) {
         return productService.getProductById(id).orElse(null);
     }
+
     @PostMapping("/products")
-    public Product addProduct(@RequestBody Product product) {
+    public Product addProduct(@RequestBody DigitalProduct product) {
+        // Temporary fix: Jackson cannot instantiate an abstract Product.
         return productService.addProduct(product);
     }
-    @DeleteMapping("/products/{id}")
+
     public void deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
     }
@@ -36,5 +38,11 @@ public class ProductController {
     public List<Product> search(@RequestParam String name) {
         return productService.findByName(name);
     }
+
+    @GetMapping("/products/summaries")
+    public List<String> getSummaries() {
+        return productService.getAllSummaries();
+    }
+
 }
 
